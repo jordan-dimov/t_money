@@ -25,6 +25,7 @@ class Money:
     def from_str(cls, money_str: str) -> "Money":
         currency, amount = money_str.split()
         currency = CurrencyCode(currency)
+        amount = amount.replace(",", "")
         amount = Decimal(amount)
         return cls(amount, currency)
 
@@ -43,14 +44,33 @@ class Money:
         return Money(self.amount - other.amount, self.currency)
 
     def __eq__(self, other):
+        self._require_same_currency(other)
         return (self.amount, self.currency) == (other.amount, other.currency)
 
     def __lt__(self, other):
         self._require_same_currency(other)
         return self.amount < other.amount
 
+    def __le__(self, other):
+        self._require_same_currency(other)
+        return self.amount <= other.amount
+
+    def __gt__(self, other):
+        self._require_same_currency(other)
+        return self.amount > other.amount
+
+    def __ge__(self, other):
+        self._require_same_currency(other)
+        return self.amount >= other.amount
+
+    def __neg__(self):
+        return Money(-self.amount, self.currency)
+
     def __mul__(self, factor: Decimal) -> "Money":
         return Money(self.amount * factor, self.currency)
+
+    def __rmul__(self, factor: Decimal) -> "Money":
+        return self * factor
 
     def convert(self, target_currency: CurrencyCode, exchange_rate: Decimal) -> "Money":
         converted_amount = self.amount * exchange_rate
