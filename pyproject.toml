@@ -18,6 +18,7 @@ classifiers = [
     "Topic :: Office/Business :: Financial",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+readme = "README.md"
 
 
 [tool.poetry.dependencies]
@@ -26,6 +27,7 @@ python = "^3.10"
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
 pytest = "^7.3.0"
+m2r2 = "^0.3.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
