@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from decimal import Decimal
 from typing import NewType
 
@@ -83,21 +83,3 @@ class Money:
     # Let's make it hashable, so we can use Money in sets and dicts
     def __hash__(self):
         return hash((self.amount, self.currency))
-
-
-def money_serializer(obj):
-    if isinstance(obj, Money):
-        result = asdict(obj)
-        result["_type"] = "Money"
-        return result
-    if isinstance(obj, Decimal):
-        return str(obj)
-    raise TypeError(f"Object of type {obj.__class__.__name__} is not JSON serializable")
-
-
-def money_deserializer(dct):
-    if (
-        dct.get("_type") == "Money"
-    ):  # Check if the _type field is present and set to 'Money'
-        return Money(Decimal(dct["amount"]), dct["currency"])
-    return dct

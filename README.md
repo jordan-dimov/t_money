@@ -58,6 +58,12 @@ rounded_usd = usd1.round_to(1)
 eur = usd.convert("EUR", Decimal("0.85"))
 ```
 
+### Money is hashable
+
+```python
+money_set = {usd1, usd2}
+```
+
 ### Serialization and deserialization
 
 ```python
