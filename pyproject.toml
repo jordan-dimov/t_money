@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "t_money"
-version = "0.1.0"
+version = "0.1.1"
 description = "Advanced Python 3.10 Dataclass for handling monetary values, keeping amount and currency together"
 authors = ["Jordan Dimov <jdimov@a115.co.uk>"]
 license = "Creative Commons"
