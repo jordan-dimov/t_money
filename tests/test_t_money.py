@@ -114,3 +114,51 @@ def test_compare_different_currency():
         money1 == money2
     with pytest.raises(DifferentCurrencyError):
         money1 != money2
+
+
+def test_repr():
+    money = Money(10, "USD")
+    assert repr(money) == "Money(amount=10, currency='USD')"
+
+
+def test_str():
+    money = Money(10, "USD")
+    assert str(money) == "USD 10.00"
+
+
+def test_sort():
+    money1 = Money(40, "USD")
+    money2 = Money(20, "USD")
+    money3 = Money(Decimal("20.1"), "USD")
+    assert sorted([money3, money1, money2]) == [money2, money3, money1]
+
+
+def test_hash():
+    money1 = Money(40, "USD")
+    money2 = Money(40, "USD")
+    assert hash(money1) == hash(money2)
+
+
+def test_hash_different_currency():
+    money1 = Money(40, "USD")
+    money2 = Money(40, "EUR")
+    assert hash(money1) != hash(money2)
+
+
+def test_hash_different_amount():
+    money1 = Money(40, "USD")
+    money2 = Money(41, "USD")
+    assert hash(money1) != hash(money2)
+
+
+def test_hash_different_amount_and_currency():
+    money1 = Money(40, "USD")
+    money2 = Money(41, "EUR")
+    assert hash(money1) != hash(money2)
+
+
+def test_set_of_money():
+    money1 = Money(40, "USD")
+    money2 = Money(40, "USD")
+    money3 = Money(Decimal("20.1"), "USD")
+    assert set([money1, money2, money3]) == {money1, money3}

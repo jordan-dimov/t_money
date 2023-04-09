@@ -80,6 +80,10 @@ class Money:
         rounded_amount = self.amount.quantize(Decimal(10) ** -decimal_places)
         return Money(rounded_amount, self.currency)
 
+    # Let's make it hashable, so we can use Money in sets and dicts
+    def __hash__(self):
+        return hash((self.amount, self.currency))
+
 
 def money_serializer(obj):
     if isinstance(obj, Money):
